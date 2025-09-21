@@ -27,6 +27,38 @@
         <h1> Test again </h1>
     <!-- The content of the website ends here! -->
 
+    <%-- Add this logging code --%>
+<%@ page import="java.io.*, java.util.Date, java.text.SimpleDateFormat" %>
+<%
+    try {
+        // Define the path for the log file inside the container
+        String logDirPath = "/usr/local/tomcat/logs";
+        String logFilePath = logDirPath + "/app.log";
+
+        // Ensure the log directory exists
+        File logDir = new File(logDirPath);
+        if (!logDir.exists()) {
+            logDir.mkdirs();
+        }
+
+        // Open the log file in append mode (the 'true' flag)
+        PrintWriter outLog = new PrintWriter(new FileWriter(logFilePath, true));
+        
+        // Create a timestamp
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        
+        // Write the log entry
+        outLog.println(timestamp + " - Page accessed by a user.");
+        
+        // IMPORTANT: Close the writer to save the changes
+        outLog.close();
+    } catch (IOException e) {
+        // Basic error handling
+        e.printStackTrace();
+    }
+%>
+<p style="color: green;"><b>A new log entry was just added to /usr/local/tomcat/logs/app.log!</b></p>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
